@@ -49,7 +49,7 @@ namespace ManyToManyDotNet5
 
         static async Task Main(string[] args)
         {
-            DirectManyToManyRelWithoutJoinTable t = new DirectManyToManyRelWithoutJoinTable();
+            DirectManyToManyRelWithJoinTable t = new DirectManyToManyRelWithJoinTable();
             await t.Run();
         }
     }

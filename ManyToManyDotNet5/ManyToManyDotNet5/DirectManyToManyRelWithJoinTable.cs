@@ -63,10 +63,15 @@ namespace ManyToManyDotNet5
             User jim = new User() { Name = "Jim" };
             User nick = new User() { Name = "Nick" };
 
-            Book designPatterns = new Book() { Name = "Design Patterns", Users = new List<User> { jim, nick } };
-            Book refactoring = new Book() { Name = "Refactoring", Users = new List<User> { jim } };
+            Book designPatterns = new Book() { Name = "Design Patterns" };
+            Book refactoring = new Book() { Name = "refactoring" };
 
-            ctx.AddRange(jim, nick, designPatterns, refactoring);
+            UserBook userBook1 = new UserBook() { User = jim, Book = designPatterns, ReadOn = new DateTime(2020, 1,1) };
+            UserBook userBook2 = new UserBook() { User = jim, Book = refactoring, ReadOn = new DateTime(2010, 1, 1) };
+            UserBook userBook3 = new UserBook() { User = nick, Book = refactoring, ReadOn = new DateTime(2020, 2, 1) };
+
+            ctx.AddRange(jim, nick, designPatterns, refactoring, userBook1, userBook2, userBook3);
+
             await ctx.SaveChangesAsync();
 
             var users = await ctx.Users.Where(u => u.BooksRead.Any(b => b.Name == "Design Patterns")).ToListAsync();
@@ -75,7 +80,7 @@ namespace ManyToManyDotNet5
                 Console.WriteLine("User: " + user.Name);
             }
 
-            var oldReaders = await ctx.Users.Where(u => u.UserBooksDetails.Any(d => d.ReadOn > new DateTime(2010, 5, 5))).ToListAsync();
+            var oldReaders = await ctx.Users.Where(u => u.UserBooksDetails.Any(d => d.ReadOn < new DateTime(2010, 5, 5))).ToListAsync();
             foreach (var user in oldReaders)
             {
                 Console.WriteLine("OldReader: " + user.Name);
