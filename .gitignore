@@ -338,8 +338,3 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-*.dll
-*.dll
-ManyToManyDotNet5/ManyToManyDotNet5/obj/Debug/netcoreapp3.1/.NETCoreApp,Version=v3.1.AssemblyAttributes.cs
-*.cache
-*.dll
